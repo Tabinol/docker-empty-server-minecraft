@@ -10,5 +10,11 @@ if [ ! -f /opt/minecraft-server-jar/${MINECRAFT_SERVER_JAR} ]; then
     exit 1
 fi
 
+if [ ! -f /opt/minecraft-server/plugins/sigterm-${SIGTERM_PLUGIN_VERSION}.jar ]; then
+    echo "Copying sigterm-${SIGTERM_PLUGIN_VERSION}.jar"
+    rm -f /opt/minecraft-server/plugins/sigterm-*.jar
+    cp /opt/minecraft-server-utils/sigterm-${SIGTERM_PLUGIN_VERSION}.jar /opt/minecraft-server/plugins/
+fi
+
 cd /opt/minecraft-server
 exec java ${JAVA_ARGS} -jar /opt/minecraft-server-jar/${MINECRAFT_SERVER_JAR}
