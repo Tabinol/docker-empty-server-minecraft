@@ -25,4 +25,5 @@ if [ ! -f /opt/minecraft-server/plugins/sigterm-${SIGTERM_PLUGIN_VERSION}.jar ];
 fi
 
 cd /opt/minecraft-server
-su-exec minecraft java ${JAVA_ARGS} -jar /opt/minecraft-server-jar/${MINECRAFT_SERVER_JAR}
+# exec with su-exec or SIGTERM will be ignored
+exec su-exec minecraft java ${JAVA_ARGS} -jar /opt/minecraft-server-jar/${MINECRAFT_SERVER_JAR}
