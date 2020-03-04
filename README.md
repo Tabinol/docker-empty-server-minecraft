@@ -17,3 +17,6 @@ takes more than 10 seconds to stop, use /docker stop/ command with _-t TIME_IN_S
 | MINECRAFT_SERVER_JAR | Name of the minecraft server jar file | minecraft_server.jar                           |
 | JAVA_ARGS            | Arguments for java                    | JAVA_ARGS-Xms1G -Xmx1G -XX:+UseConcMarkSweepGC |
 | USER_UID             | GID of the minecraft server user      | 1000                                           |
+| MYSQL_WAITFOR        | Wait for MySQL/Maria before MC        | false                                          |
+| MYSQL_HOST           | MySQL host name                       | localhost                                      |
+| MYSQL_PORT           | MySQL port                            | 3306                                           |

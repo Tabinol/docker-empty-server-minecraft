@@ -9,10 +9,16 @@ FROM openjdk:8-jre
 
 ENV SIGTERM_PLUGIN_VERSION=1.0.0
 
+RUN apt-get update && apt-get install -y \
+    netcat-openbsd \
+    && rm -rf /var/lib/apt/lists/*
+ 
 COPY --from=builder /su-exec/su-exec /usr/local/bin/su-exec
 RUN chmod +x /usr/local/bin/su-exec
 
-RUN mkdir -p /opt/minecraft-server-utils && cd /opt/minecraft-server-utils && wget https://bitbucket.org/Tabinol/sigterm/downloads/sigterm-${SIGTERM_PLUGIN_VERSION}.jar
+RUN mkdir -p /opt/minecraft-server-utils \
+    && cd /opt/minecraft-server-utils \
+    && wget https://bitbucket.org/Tabinol/sigterm/downloads/sigterm-${SIGTERM_PLUGIN_VERSION}.jar
 
 ADD entrypoint.sh /opt/bin/entrypoint.sh
 RUN chmod +x /opt/bin/entrypoint.sh
