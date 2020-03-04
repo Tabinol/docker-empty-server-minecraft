@@ -4,9 +4,9 @@
 MINECRAFT_SERVER_JAR=${MINECRAFT_SERVER_JAR:-minecraft_server.jar}
 JAVA_ARGS=${JAVA_ARGS:-"JAVA_ARGS-Xms1G -Xmx1G -XX:+UseConcMarkSweepGC"}
 USER_UID=${USER_UID:-1000}
-MYSQL_WAITFOR=${MYSQL_WAITFOR:false}
-MYSQL_HOST=${MYSQL_HOST:localhost}
-MYSQL_PORT=${MYSQL_PORT:3306}
+MYSQL_WAITFOR=${MYSQL_WAITFOR:-false}
+MYSQL_HOST=${MYSQL_HOST:-localhost}
+MYSQL_PORT=${MYSQL_PORT:-3306}
 
 # Create user if not exist
 id -u minecraft &>/dev/null || ( useradd --create-home --shell /bin/bash --uid ${USER_UID} minecraft && mkdir -p /opt/minecraft-server/plugins && chown -R minecraft:minecraft /opt/minecraft-server )
@@ -28,8 +28,8 @@ if [ ! -f /opt/minecraft-server/plugins/sigterm-${SIGTERM_PLUGIN_VERSION}.jar ];
 fi
 
 # Waiting for mySQL if needed
-if [ "$MYSQL_WAITFOR" = "true" ]; then
-    until nc -z -v -w30 ${MYSQL_HOST} ${MYSQL_PORT}
+if [ "${MYSQL_WAITFOR}" = "true" ]; then
+    until nc -z -w30 ${MYSQL_HOST} ${MYSQL_PORT}
     do
         echo "Waiting for database..."
         sleep 1
