@@ -1,11 +1,11 @@
-FROM openjdk:8-jre as builder
+FROM openjdk:11-jre as builder
 WORKDIR /su-exec
 RUN set -ex
 RUN curl -o /su-exec/su-exec.c https://raw.githubusercontent.com/ncopa/su-exec/master/su-exec.c
 RUN apt-get update && apt-get install -y --no-install-recommends gcc libc-dev
 RUN gcc -Wall /su-exec/su-exec.c -o/su-exec/su-exec
 
-FROM openjdk:8-jre
+FROM openjdk:11-jre
 
 ENV SIGTERM_PLUGIN_VERSION=1.0.0
 
