@@ -1,8 +1,12 @@
-ENV JAVA_VERSION_PREFIX=8
-ENV JAVA_VERSION_SUFFIX=-jre
-ENV SIGTERM_PLUGIN_VERSION=1.0.0
+ARG JAVA_VERSION_PREFIX=8
+ARG JAVA_VERSION_SUFFIX=-jre
+ARG SIGTERM_PLUGIN_VERSION=1.0.0
 
 FROM maven:3.6.3-openjdk-${JAVA_VERSION_PREFIX} as builder
+ARG JAVA_VERSION_PREFIX
+ARG JAVA_VERSION_SUFFIX
+ARG SIGTERM_PLUGIN_VERSION
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git gcc libc-dev
 
@@ -15,7 +19,9 @@ RUN set -ex
 RUN curl -o /su-exec/su-exec.c https://raw.githubusercontent.com/ncopa/su-exec/master/su-exec.c
 RUN gcc -Wall /su-exec/su-exec.c -o/su-exec/su-exec
 
-FROM openjdk:${JAVA_VERSION_PREFIX}-${JAVA_VERSION_SUFFIX}
+FROM openjdk:${JAVA_VERSION_PREFIX}${JAVA_VERSION_SUFFIX}
+ARG SIGTERM_PLUGIN_VERSION
+ENV SIGTERM_PLUGIN_VERSION=${SIGTERM_PLUGIN_VERSION}
 
 RUN apt-get update && apt-get install -y \
     netcat-openbsd \
